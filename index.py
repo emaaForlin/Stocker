@@ -31,12 +31,13 @@ class Product:
 		#Output messages RED
 		self.message = Label(text='', fg='red')
 		self.message.grid(row=3, column=0, columnspan=2, sticky=W+E)
+
 		#Table
 		self.tree = ttk.Treeview(height=10, columns=2)
 		self.tree.grid(row=4,column=0, columnspan=2)
 		self.tree.heading('#0', text='Name', anchor=CENTER)
 		self.tree.heading('#1', text='Price', anchor=CENTER)
-		
+
 		#Buttons
 		ttk.Button(text='DELETE', command=self.delete_products).grid(row=5, column=0, sticky=W+E)
 		ttk.Button(text='EDIT', command=self.edit_product).grid(row=5, column=1, sticky=W+E)
@@ -59,12 +60,12 @@ class Product:
 		for element in records:
 			self.tree.delete(element)
 
-		#quering data	
+		#quering data
 		query = 'SELECT * FROM product ORDER BY name DESC'
 		db_rows = self.query(query)
 		for row in db_rows:
 			self.tree.insert('', 0, text=row[1], values=row[2])
-	
+
 	def validation(self):
 		return len(self.name.get()) != 0 and len(self.price.get()) != 0
 
@@ -72,7 +73,7 @@ class Product:
 		if self.validation():
 			parameters = (self.name.get().capitalize(), self.price.get())
 			query = 'INSERT INTO product VALUES(NULL, ?, ?)'
-			
+
 			self.query(query, parameters)
 			self.get_products()
 			self.message['text'] = 'Product {} added succesfully'.format(self.name.get().capitalize())
@@ -87,7 +88,7 @@ class Product:
 			self.tree.item(self.tree.selection())['text']
 		except IndexError:
 			self.message['text'] = 'Please select a record'
-			return 
+			return
 		name = self.tree.item(self.tree.selection())['text']
 		query = 'DELETE FROM product WHERE name = ?'
 		self.query(query, (name,))
