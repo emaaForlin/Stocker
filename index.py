@@ -11,7 +11,7 @@ class Product:
 		self.wind.title('Products App')
 
 		#Create a frame container
-		frame = LabelFrame(self.wind, text='Resgiter a new Product')
+		frame = LabelFrame(self.wind, text='Register a new Product')
 		frame.grid(row=0, column=0 ,columnspan=3, pady=20)
 
 		#Name input
